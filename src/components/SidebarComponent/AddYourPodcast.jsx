@@ -76,7 +76,7 @@ function AddYourPodcastSection({ onView }) {
     <div>
       {!isEditTranscript ? (
         <>
-          <p className='heading mt-10 text-[4vh] font-semibold'>Add Your Podcst</p>
+          <p className='heading mt-10 text-[4vh] font-semibold'>Add Your Podcast</p>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5'>
             <Card
               title="RSS Feed"
