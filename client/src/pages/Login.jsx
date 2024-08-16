@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 import Maskgroup from '../assets/Maskgroup.png';
 import QuesLogo from '../assets/QuesLogo.png';
 import logo from '../assets/logo.png';
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLoginNavigation = () => {
-    navigate('/createproject');
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const { token } = response.data;
+      login(token);
+      navigate('/createproject');
+    } catch (err) {
+      setError('Invalid email or password. Please try again.');
+    }
+  };
+
+  const handleLoginNavigation = (e) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   return (
@@ -23,83 +41,43 @@ function Login() {
         <div>
           <div
             className="headingLogo w-[270px] h-[58px]"
-            style={{
-              backgroundImage: `url(${QuesLogo})`,
-            }}
+            style={{ backgroundImage: `url(${QuesLogo})` }}
           ></div>
           <div className="heroText">
             <p className="w-[30vw] text-white font-normal text-[8vh] mt-10">Your podcast</p>
             <p className="w-[30vw] text-white font-normal text-[8vh] -translate-y-[25%]">will no longer</p>
             <p className="text-white font-normal text-[8vh] -translate-y-[50%]">be just a hobby.</p>
-            <p className="text-white text-[3vh] font-light -translate-y-[100%]">Supercharge Your Distribution</p>
-            <p className="text-white text-[3vh] font-light -translate-y-[100%]">using our AI assistant!</p>
           </div>
         </div>
       </div>
-      <div className="rightSideLogin flex flex-col w-[30vw]">
-        <div className="flex justify-center items-center w-[100%] mt-20 flex-col">
-          <div
-            className="h-[100px] w-[100px] bg-cover bg-center"
-            style={{ backgroundImage: `url(${logo})` }}
-          ></div>
-          <div className="flex justify-center flex-col items-center">
-            <p className="text-[4vh] text-[#7E22CE]">Welcome to</p>
-            <p className="text-[4vh] -translate-y-[40%] font-semibold text-[#7E22CE]">Ques.AI</p>
-          </div>
+      <div className="rightsideBanner bg-white w-[30vw] h-[100vh] px-5 py-10 flex flex-col items-center">
+        <div className="logo text-[#7E22CE] text-[5vh] font-bold mb-5">
+          <img src={logo} alt="" className='h-[10vh]' />
         </div>
-        <div className="inputSection p-20">
-          <div className="mb-4">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#7E22CE]"
-              placeholder="Email Address"
-              style={{ fontWeight: 'semibold' }}
-            />
-          </div>
-
-          <div className="mb-4">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#7E22CE]"
-              placeholder="Password"
-              style={{ fontWeight: 'semibold' }}
-            />
-          </div>
-
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                name="rememberMe"
-                className="h-4 w-4 text-indigo-500 focus:ring-indigo-400 border-gray-300 rounded"
-              />
-              <label htmlFor="rememberMe" className="ml-2 text-gray-700 font-normal">
-                Remember Me
-              </label>
-            </div>
-            <div>
-              <a href="#" className="text-indigo-500 text-sm">
-                Forgot Password?
-              </a>
-            </div>
-          </div>
-
+        <p className="text-[#7E22CE] text-[4vh] font-bold">Sign in</p>
+        <p className="text-[#7E22CE] text-[2vh] font-semibold">Start creating with us!</p>
+        <div className="loginForm flex flex-col mt-10 w-full">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <button
-            type="button"
-            className="w-full bg-[#7E22CE] text-[20px] text-white font-semibold py-3 px-4 rounded-lg hover:bg-[#64368f] transition-colors duration-300"
+            className="bg-[#7E22CE] text-white p-2 rounded-lg"
             onClick={handleLoginNavigation}
           >
-            Login
+            Sign in
           </button>
-          <div className="flex gap-2 mt-5 justify-center">
-            <p>Don't have an account?</p>
-            <button className="text-blue-500 font-semibold">Create Account</button>
-          </div>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>
       </div>
     </div>

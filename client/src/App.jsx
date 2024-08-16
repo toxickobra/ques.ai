@@ -1,22 +1,30 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import CreateProject from './pages/CreateProject.jsx';
-import Login from "./pages/Login.jsx";
-import ProjectDetails from './pages/ProjectDetails.jsx';
-function App() {
-  
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import CreateProject from './pages/CreateProject';
+import Login from "./pages/Login";
+import ProjectDetails from './pages/ProjectDetails';
 
+// PrivateRoute component to protect routes that need authentication
+const PrivateRoute = ({ element, ...rest }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? element : <Navigate to="/login" />;
+};
+
+function App() {
   return (
-    <div className= ''>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Login/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/createproject' element={<CreateProject/>}/>
-          <Route path='/addyourproject' element={<ProjectDetails/>}/>
-        </Routes>
-      </BrowserRouter>
+    <div>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/createproject" element={<PrivateRoute element={<CreateProject />} />} />
+            <Route path="/addyourproject" element={<PrivateRoute element={<ProjectDetails />} />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
