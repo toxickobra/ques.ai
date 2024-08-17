@@ -1,39 +1,40 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Maskgroup from '../assets/Maskgroup.png';
 import QuesLogo from '../assets/QuesLogo.png';
 import logo from '../assets/logo.png';
 import { useAuth } from '../contexts/AuthContext';
 
-function Login() {
+function Register() {
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useAuth(); // Check if the user is authenticated
+  const { login } = useAuth(); // Access the login function from AuthContext
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    // Redirect to the create project page if already authenticated
-    if (isAuthenticated) {
-      navigate('/addyourproject');
-    }
-  }, [isAuthenticated, navigate]);
-
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      // Register the user
+      const response = await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
+
+      // Get the token from the registration response
       const { token } = response.data;
-      login(token); // Store token using AuthContext
-      navigate('/addyourproject'); // Redirect to the desired route after successful login
+
+      // Log in the user using the token
+      login(token); // Store the token using AuthContext
+
+      // Navigate to the create project page
+      navigate('/addyourproject');
     } catch (err) {
-      setError('Invalid email or password. Please try again.');
+      setError('Registration failed. Please try again.');
     }
   };
 
-  const handleLoginNavigation = (e) => {
+  const handleRegisterNavigation = (e) => {
     e.preventDefault();
-    handleLogin();
+    handleRegister();
   };
 
   return (
@@ -61,43 +62,41 @@ function Login() {
         <div className="logo text-[#7E22CE] text-[5vh] font-bold mb-5">
           <img src={logo} alt="" className="h-[10vh]" />
         </div>
-        <p className="text-[#7E22CE] text-[4vh] ">Welcome to</p>
-        <p className="text-[#7E22CE] text-[4vh] font-bold">Ques.AI</p>
-        <div className="loginForm flex flex-col mt-10 w-[70%]">
+        <p className="text-[#7E22CE] text-[4vh] font-bold">Create Account</p>
+        <p className="text-[#7E22CE] text-[2vh] font-semibold">Join us today!</p>
+        <div className="registerForm flex flex-col mt-10 w-full">
+          <input
+            type="text"
+            placeholder="Enter your username"
+            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <input
             type="email"
             placeholder="Enter your email"
-            className="border  p-2 rounded-md  mb-5"
+            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Enter your password"
-            className="border  p-2 rounded-md  mb-5"
+            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
             className="bg-[#7E22CE] text-white p-2 rounded-lg"
-            onClick={handleLoginNavigation}
+            onClick={handleRegisterNavigation}
           >
-            Sign in
+            Register
           </button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
-        </div>
-        {/* Create Account Option */}
-        <div className="mt-5">
-          <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-[#7E22CE] font-semibold">
-              Create Account
-            </Link>
-          </p>
         </div>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default Register;

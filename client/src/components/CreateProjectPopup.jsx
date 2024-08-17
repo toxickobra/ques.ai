@@ -1,37 +1,35 @@
 import axios from 'axios';
+import PropTypes from 'prop-types'; // For prop type validation
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext'; // Adjust import path as necessary
+import { useAuth } from '../contexts/AuthContext';
 
-const CreateProjectPopup = ({ closeModal, onProjectCreated }) => {
+const addyourprojectPopup = ({ closeModal, onProjectCreated }) => {
   const [projectName, setProjectName] = useState('');
   const [error, setError] = useState('');
-  const { token, isAuthenticated } = useAuth(); // Adjust based on your context implementation
-
+  const { isAuthenticated, token } = useAuth();
   const handleSubmit = async () => {
-    if (!isAuthenticated) {
-      setError('You must be logged in to create a project.');
-      return;
-    }
-
+    
     if (projectName.trim() === '') {
       setError("Project Name can't be empty");
       return;
     }
 
     setError('');
-    
+
     try {
+      
       const response = await axios.post('http://localhost:5000/api/projects', {
         name: projectName,
       }, {
         headers: {
-          'x-auth-token': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZiZjI2MTk2NTEzY2YyNGM0OTZmZjA2In0sImlhdCI6MTcyMzgwMzE2MSwiZXhwIjoxNzIzODA2NzYxfQ.yHm5Vf8_ebZeKFswnEp3dMD-qrwDeKymQnwxd-2WEz8`, // Pass the JWT token in the request headers
+          'x-auth-token': token,
         },
       });
 
       onProjectCreated(response.data);
       closeModal();
     } catch (err) {
+      console.error('Error creating project:', err.response ? err.response.data : err.message);
       setError('Failed to create project. Please try again.');
     }
   };
@@ -67,4 +65,9 @@ const CreateProjectPopup = ({ closeModal, onProjectCreated }) => {
   );
 };
 
-export default CreateProjectPopup;
+addyourprojectPopup.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  onProjectCreated: PropTypes.func.isRequired,
+};
+
+export default addyourprojectPopup;

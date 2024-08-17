@@ -11,7 +11,7 @@ function SidebarOption({ icon, optionName, isActive, onClick }) {
       <div className='mx-3'>
         {icon} {/* Render the icon */}
       </div>
-      <span className={`text-gray-700 font-medium text-[24px] ${
+      <span className={`text-gray-700 font-medium text-[20px] ${
         isActive && 'bg-[#f9f3ff] text-[#7e22ce]' 
       }`}>
         {optionName}

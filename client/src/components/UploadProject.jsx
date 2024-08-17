@@ -1,24 +1,44 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext'; // Import useAuth to access authentication token
 
-const UploadProject = ({ closeModal, onUpload }) => {
-  const [uploadName, setuploadName] = useState('');
-  const [uploadLink, setuploadLink] = useState('');
+const UploadProject = ({ closeModal, onUpload, projectId }) => {
+  const [uploadName, setUploadName] = useState('');
+  const [uploadLink, setUploadLink] = useState('');
   const [error, setError] = useState('');
+  const { token } = useAuth(); // Get the authentication token from context
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (uploadName.trim() === '') {
-      setError("Name Can't be empty");
+      setError("Name can't be empty");
     } else {
-      // Handle the project creation logic here
-      setError('');
-      // Close the modal after submission
-      closeModal();
-      onUpload();
+      try {
+        // Replace with your API endpoint
+        await axios.post(`http://localhost:5000/api/${projectId}/objects`, 
+          {
+            name: uploadName,
+            link: uploadLink,
+            project: projectId, // Send the project ID
+            // uploadDate is not explicitly sent; it defaults to the current date in the schema
+          },
+          {
+            headers: {
+              'x-auth-token': token,
+            },
+          }
+        );
+        setError('');
+        closeModal();
+        onUpload();
+      } catch (error) {
+        console.error('Error uploading object:', error);
+        setError('An error occurred while uploading. Please try again.');
+      }
     }
   };
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center '>
+    <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
       <div className='bg-white p-8 rounded-lg max-w-[40vw] min-w-[40vw]'>
         <p className='text-xl font-semibold mb-4'>Upload From Youtube</p>
         <div className="mb-4">
@@ -29,7 +49,7 @@ const UploadProject = ({ closeModal, onUpload }) => {
             type="text"
             id="uploadName"
             value={uploadName}
-            onChange={(e) => setuploadName(e.target.value)}
+            onChange={(e) => setUploadName(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7e22ce]"
           />
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
@@ -40,10 +60,9 @@ const UploadProject = ({ closeModal, onUpload }) => {
             type="text"
             id="uploadLink"
             value={uploadLink}
-            onChange={(e) => setuploadLink(e.target.value)}
+            onChange={(e) => setUploadLink(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7e22ce]"
           />
-          
         </div>
         <div className="flex justify-end gap-5">
           <button
