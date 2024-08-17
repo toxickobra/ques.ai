@@ -67,17 +67,38 @@ function Login() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="border  p-2 rounded-md  mb-5"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#7E22CE]"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Enter your password"
-            className="border  p-2 rounded-md  mb-5"
+            className="w-full px-4 my-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#7E22CE]"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    name="rememberMe"
+                    className="h-4 w-4 text-indigo-500 focus:ring-indigo-400 border-gray-300 rounded"
+                  />
+                  <label htmlFor="rememberMe" className="ml-2 text-gray-700 font-normal">
+                    Remember Me
+                  </label>
+              </div>
+              <div>
+                <a href="#" className="text-indigo-500 text-sm">
+                  Forgot Password?
+                </a>
+              </div>
+          </div>
+
+
           <button
             className="bg-[#7E22CE] text-white p-2 rounded-lg"
             onClick={handleLoginNavigation}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Maskgroup from '../assets/Maskgroup.png';
 import QuesLogo from '../assets/QuesLogo.png';
 import logo from '../assets/logo.png';
@@ -64,25 +64,25 @@ function Register() {
         </div>
         <p className="text-[#7E22CE] text-[4vh] font-bold">Create Account</p>
         <p className="text-[#7E22CE] text-[2vh] font-semibold">Join us today!</p>
-        <div className="registerForm flex flex-col mt-10 w-full">
+        <div className="registerForm flex flex-col mt-10 w-[80%]">
           <input
             type="text"
             placeholder="Enter your username"
-            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#7E22CE] mb-2"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="email"
             placeholder="Enter your email"
-            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#7E22CE] mb-2"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Enter your password"
-            className="border border-[#7E22CE] p-2 rounded-lg mb-5"
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-[#7E22CE] mb-8"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -93,6 +93,16 @@ function Register() {
             Register
           </button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
+
+          {/* Added "Have an account? Log in" section */}
+          <div className="mt-5 text-center">
+            <p className="text-[#7E22CE]">
+              Have an account?{' '}
+              <Link to="/login" className="text-[#7E22CE] font-bold underline">
+                Log in
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
