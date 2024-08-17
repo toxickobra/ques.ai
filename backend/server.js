@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const session = require('express-session'); // Import express-session
 const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/Project');
 const objectRoutes = require('./routes/Object'); // Register object routes
@@ -16,7 +17,15 @@ const app = express();
 app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:5173'  // Adjust the origin to match your React development server
-  }));
+}));
+
+// Session Middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your_secret_key', // Use a secure secret key from environment variables
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 24 * 60 * 60 * 1000 } // Session cookie expiry (24 hours)
+}));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {

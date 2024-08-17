@@ -55,3 +55,24 @@ exports.deleteObject = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+// Update the link for an object by ID
+exports.updateObjectLink = async (req, res) => {
+  try {
+    const { objectId } = req.params;
+    const { link } = req.body;
+
+    // Ensure the object exists
+    const object = await ObjectModel.findById(objectId);
+    if (!object) return res.status(404).json({ msg: 'Object not found' });
+
+    // Update the link text
+    object.link = link;
+    const updatedObject = await object.save();
+
+    res.json(updatedObject);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+};

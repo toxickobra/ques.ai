@@ -1,7 +1,7 @@
 const Project = require('../models/Project');
-
+const Object = require('../models/Object');
 // Create a new project
-exports.createProject = async (req, res) => {
+exports.addyourproject = async (req, res) => {
   try {
     const { name } = req.body;
     const newProject = new Project({ user: req.user.id, name });
@@ -25,16 +25,27 @@ exports.getProjectById = async (req, res) => {
   }
 };
 
-// Get all projects for the authenticated user
 exports.getAllProjectsForUser = async (req, res) => {
-  try {
-    const projects = await Project.find({ user: req.user.id });
-    res.json(projects);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server error');
-  }
-};
+    try {
+      const projects = await Project.find({ user: req.user.id });
+  
+      const projectsWithObjectCounts = await Promise.all(
+        projects.map(async (project) => {
+          
+          const objectCount = await Object.countDocuments({ project: project._id });
+          
+          
+          return { ...project.toObject(), objectCount };
+        })
+      );
+  
+      res.json(projectsWithObjectCounts);
+    } catch (error) {
+      res.status(500).send('Server error');
+    }
+  };
+// Get all projects for the authenticated user
+
 
 // Delete a project by ID
 exports.deleteProject = async (req, res) => {

@@ -1,3 +1,5 @@
+// controllers/authController.js
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
@@ -24,6 +26,23 @@ exports.registerUser = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+
+exports.getProfile = async (req, res) => {
+    try {
+      // Fetch the user profile using the user ID from the token payload
+      const user = await User.findById(req.user.id).select('-password'); // Exclude the password
+  
+      if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+  
+      res.json(user);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send('Server error');
+    }
+  };
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;

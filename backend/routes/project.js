@@ -1,15 +1,16 @@
 const express = require('express');
 const auth = require('../middleware/auth');
 const {
-  createProject,
+  addyourproject,
   getProjectById,
   getAllProjectsForUser,
-  deleteProject
+  deleteProject,
+  getProjectObjectCount
 } = require('../controllers/projectController');
 const router = express.Router();
 
 // Create a new project
-router.post('/', auth, createProject);
+router.post('/', auth, addyourproject);
 
 // Get a project by ID
 router.get('/:id', auth, getProjectById);
