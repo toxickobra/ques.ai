@@ -6,7 +6,7 @@ const session = require('express-session'); // Import express-session
 const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/project');
 
-const objectRoutes = require('./routes/Object'); // Register object routes
+const objectRoutes = require('./routes/object'); // Register object routes
 
 // Load environment variables
 dotenv.config();
