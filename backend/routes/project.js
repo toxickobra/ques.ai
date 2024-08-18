@@ -21,4 +21,6 @@ router.get('/', auth, getAllProjectsForUser);
 // Delete a project by ID
 router.delete('/:id', auth, deleteProject);
 
+route.delete(':/id',auth , deleteProject);
+
 module.exports = router;
