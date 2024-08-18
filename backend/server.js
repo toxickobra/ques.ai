@@ -15,25 +15,11 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-
-// CORS Configuration
-const allowedOrigins = [
-  'http://localhost:5173', // Your React development server
-  'https://ques-ai-chi.vercel.app' // Your Vercel production URL
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true // Enable credentials if you use cookies or authentication
+    origin: ['http://localhost:5174', 'https://ques-ai-chi.vercel.app'], // Allow both localhost and Vercel URLs
+    credentials: true // Allow cookies and sessions if needed
 }));
+
 
 // Session Middleware
 app.use(session({
