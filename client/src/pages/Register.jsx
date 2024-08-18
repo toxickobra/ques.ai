@@ -17,7 +17,7 @@ function Register() {
   const handleRegister = async () => {
     try {
       // Register the user
-      const response = await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
+      const response = await axios.post('https://ques-ai-3lhh.onrender.com/api/auth/register', { username, email, password });
 
       // Get the token from the registration response
       const { token } = response.data;

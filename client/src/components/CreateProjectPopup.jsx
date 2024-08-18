@@ -18,7 +18,7 @@ const addyourprojectPopup = ({ closeModal, onProjectCreated }) => {
 
     try {
       
-      const response = await axios.post('http://localhost:5000/api/projects', {
+      const response = await axios.post('https://ques-ai-3lhh.onrender.com/api/projects', {
         name: projectName,
       }, {
         headers: {

@@ -22,7 +22,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post('https://ques-ai-3lhh.onrender.com/api/auth/login', { email, password });
       const { token } = response.data;
       login(token); // Store token using AuthContext
       navigate('/addyourproject'); // Redirect to the desired route after successful login

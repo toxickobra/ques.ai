@@ -30,7 +30,7 @@ function CreateProject() {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/projects', {
+      const response = await axios.get('https://ques-ai-3lhh.onrender.com/api/projects', {
         headers: {
           'x-auth-token': token,
         },

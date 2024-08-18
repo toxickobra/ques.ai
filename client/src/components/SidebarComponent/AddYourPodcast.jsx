@@ -27,7 +27,7 @@ function AddYourPodcastSection({ onView }) {
   useEffect(() => {
     const fetchObjects = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/${projectId}/objects`, {
+        const response = await axios.get(`https://ques-ai-3lhh.onrender.com/api/${projectId}/objects`, {
           headers: {
             'x-auth-token': token,
           },
@@ -64,7 +64,7 @@ function AddYourPodcastSection({ onView }) {
   const handleUpdateObjectLink = async () => {
     try {
       if (selectedObject) {
-        await axios.put(`http://localhost:5000/api/objects/${selectedObject._id}`, 
+        await axios.put(`https://ques-ai-3lhh.onrender.com/api/objects/${selectedObject._id}`, 
         { link: text },
         {
           headers: {
@@ -82,7 +82,7 @@ function AddYourPodcastSection({ onView }) {
 
   const fetchUpdatedObjects = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/${projectId}/objects`, {
+      const response = await axios.get(`https://ques-ai-3lhh.onrender.com/api/${projectId}/objects`, {
         headers: {
           'x-auth-token': token,
         },
@@ -131,7 +131,7 @@ function AddYourPodcastSection({ onView }) {
 
   const handleDelete = async (objectId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/objects/${objectId}`, {
+      await axios.delete(`https://ques-ai-3lhh.onrender.com/api/objects/${objectId}`, {
         headers: {
           'x-auth-token': token,
         },

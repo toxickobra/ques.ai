@@ -14,7 +14,7 @@ const UploadProject = ({ closeModal, onUpload, projectId }) => {
     } else {
       try {
         // Replace with your API endpoint
-        await axios.post(`http://localhost:5000/api/${projectId}/objects`, 
+        await axios.post(`https://ques-ai-3lhh.onrender.com/api/${projectId}/objects`, 
           {
             name: uploadName,
             link: uploadLink,

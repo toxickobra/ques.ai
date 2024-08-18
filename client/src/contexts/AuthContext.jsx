@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
         try {
-          const response = await axios.get('http://localhost:5000/api/auth/verify', {
+          const response = await axios.get('https://ques-ai-3lhh.onrender.com/api/auth/verify', {
             headers: { 'x-auth-token': storedToken },
           });
 
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
           setToken(storedToken);
 
           // Fetch user profile
-          const profileResponse = await axios.get('http://localhost:5000/api/auth/profile', {
+          const profileResponse = await axios.get('https://ques-ai-3lhh.onrender.com/api/auth/profile', {
             headers: { 'x-auth-token': storedToken },
           });
 
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     setToken(newToken);
 
     // Fetch and set user profile after logging in
-    const profileResponse = await axios.get('http://localhost:5000/api/auth/profile', {
+    const profileResponse = await axios.get('https://ques-ai-3lhh.onrender.com/api/auth/profile', {
       headers: { 'x-auth-token': newToken },
     });
 
