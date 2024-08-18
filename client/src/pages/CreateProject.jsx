@@ -8,7 +8,7 @@ import CreateProjectImg from '../assets/CreateProjectImg.png';
 import QuesLogoPurple from '../assets/QuesLogoPurple.png';
 import sampleProjectImg from '../assets/sampleProjectImg.png';
 import CreateProjectPopup from '../components/CreateProjectPopup';
-import ProjectCard from '../components/ProjectCard';
+import ProjectCard from '../components/projectCard';
 import { useAuth } from '../contexts/AuthContext';
 
 function CreateProject() {
