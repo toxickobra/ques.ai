@@ -5,6 +5,7 @@ const cors = require('cors');
 const session = require('express-session'); // Import express-session
 const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/Project');
+
 const objectRoutes = require('./routes/Object'); // Register object routes
 
 // Load environment variables
