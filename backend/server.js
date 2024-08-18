@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const session = require('express-session'); // Import express-session
 const authRoutes = require('./routes/auth');
-const projectRoutes = require('./routes/Project');
+const projectRoutes = require('./routes/project');
 
 const objectRoutes = require('./routes/Object'); // Register object routes
 
