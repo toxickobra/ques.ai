@@ -115,7 +115,7 @@ function ProjectDetails() {
           >
             <img src={userphoto} alt="User" className="w-16 h-16 rounded-md" />
             <div className="userinfosidebar flex flex-col ml-4">
-              <p className="font-semibold">{user.username}</p>
+              <p className="font-semibold flex flex-wrap">{user.username}</p>
               <p>{user.email}</p>
             </div>
           </div>
