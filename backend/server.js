@@ -17,7 +17,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5174', 'https://ques-ai-chi.vercel.app'], // Allow both localhost and Vercel URLs
+    origin: ['http://localhost:5173', 'https://ques-ai-chi.vercel.app'], // Allow both localhost and Vercel URLs
     credentials: true // Allow cookies and sessions if needed
 }));
 
