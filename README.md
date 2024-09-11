@@ -102,7 +102,6 @@ backend/
 - [Express.js](https://expressjs.com/) - Web framework
 - [React.js](https://reactjs.org/) - Frontend library
 - [Node.js](https://nodejs.org/) - Runtime environment
-- [Redux](https://redux.js.org/) - State management
 - [JWT](https://jwt.io/) - Authentication
 
 ### API Endpoints
