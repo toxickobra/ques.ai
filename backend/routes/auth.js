@@ -23,3 +23,4 @@ router.get('/profile', authenticateToken, getProfile);
 router.put('/username', authenticateToken, updateUsername); // Corrected line
 
 module.exports = router;
+
